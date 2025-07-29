@@ -1,0 +1,40 @@
+# Ignorar entorno virtual
+venv/
+.venv/
+env/
+ENV/
+
+# Bytecode de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de logs y bases de datos locales
+*.log
+*.sqlite3
+
+# Archivos de configuración de editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de dependencias compiladas
+*.so
+*.pyd
+*.dll
+
+# Entorno de pruebas
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Archivos de freeze
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
