@@ -16,40 +16,13 @@ FPS = 60
 ## Color del fondo de la ventana (RGB)
 SCREEN_BLACK = (0,0,0)
 
-# Inicialización de Pygame
-def main():
-    # Inicilización de Pygame
-    pygame.init()
-
-    #Inicialización de la superficie de dibujo (display surface)
-    window_surface = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-    pygame.display.set_caption("Pong from Atari")
-
-    #Creacion pelota
-    pelota = PelotaPong()
-
-    #Bucle principal 
-    jugando=True
-    while jugando:
-        pelota.mover()
-        pelota.dibujar(window_surface)
-        window_surface.fill(SCREEN_BLACK)
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                jugando = False
-
-        pygame.display.flip()
-        pygame.time.Clock().tick(FPS)
-    
-    pygame.quit()
 
 ## --- PELOTA --- ##
 class PelotaPong:
     # --- Atributos de la Clase --- 
     def __init__(self):
         #Imagen de la Pelota
-        self.radio = 10
+        self.lado = 10
         self.color = (255,255,255) #color Blanco
 
         #Posicion de la pelota
@@ -68,9 +41,43 @@ class PelotaPong:
 
     # -- METODO -- Dibujo de la pelota
     def dibujar(self,surface):
-        pygame.draw.circle(surface,self.color, (int(self.x), int(self.y), self.radio))
+        pygame.draw.rect(surface, self.color, (int(self.x), int(self.y), self.lado, self.lado))
+
+    # -- METODO -- Rebotar la pelota
+    def rebotar(self):
+        pass
 
 
+# Inicialización de Pygame
+def main():
+    # Inicilización de Pygame
+    pygame.init()
+
+    #Inicialización de la superficie de dibujo (display surface)
+    window_surface = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+    pygame.display.set_caption("Pong from Atari")
+    clock = pygame.time.Clock()
+
+    #Creacion pelota
+    pelota = PelotaPong()
+
+    #Bucle principal 
+    jugando=True
+    while jugando:
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                jugando = False
+        
+        pelota.mover()
+
+        window_surface.fill(SCREEN_BLACK)
+        pelota.dibujar(window_surface)
+
+        pygame.display.flip()
+        clock.tick(FPS)
+    
+    pygame.quit()
 
 if __name__ == "__main__":
     main()
