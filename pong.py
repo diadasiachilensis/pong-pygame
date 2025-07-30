@@ -4,6 +4,7 @@
 import pygame
 from pygame.locals import *
 import sys
+import random
 
 # Constantes para la inicialización de la superficie de dibujo
 ## Dimesiones de la ventana 
@@ -13,7 +14,7 @@ SCREEN_HEIGHT = 600 # Alto de la ventana
 ## Fotogramas por segundo
 FPS = 60
 ## Color del fondo de la ventana (RGB)
-WHITE = (255,255,255)
+SCREEN_BLACK = (0,0,0)
 
 # Inicialización de Pygame
 def main():
@@ -24,10 +25,15 @@ def main():
     window_surface = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
     pygame.display.set_caption("Pong from Atari")
 
+    #Creacion pelota
+    pelota = PelotaPong()
+
     #Bucle principal 
     jugando=True
     while jugando:
-        window_surface.fill(WHITE)
+        pelota.mover()
+        pelota.dibujar(window_surface)
+        window_surface.fill(SCREEN_BLACK)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -39,6 +45,31 @@ def main():
     pygame.quit()
 
 ## --- PELOTA --- ##
+class PelotaPong:
+    # --- Atributos de la Clase --- 
+    def __init__(self):
+        #Imagen de la Pelota
+        self.radio = 10
+        self.color = (255,255,255) #color Blanco
+
+        #Posicion de la pelota
+        # Punto centro de la pelota
+        self.x = SCREEN_WIDTH  // 2
+        self.y = SCREEN_HEIGHT // 2
+
+        #Dirección de movimiento de la Pelota
+        self.dir_x = random.choice([-5,5])
+        self.dir_y = random.choice([-5,5])
+    
+    # -- METODO -- Comportamiento del objeto
+    def mover(self):
+        self.x = self.dir_x
+        self.y = self.dir_y
+
+    # -- METODO -- Dibujo de la pelota
+    def dibujar(self,surface):
+        pygame.draw.circle(surface,self.color, (int(self.x), int(self.y), self.radio))
+
 
 
 if __name__ == "__main__":
